@@ -5,7 +5,6 @@ import com.hebei.pojo.User;
 import com.hebei.server.UserServer;
 import com.hebei.util.JwtUtil;
 import com.hebei.util.Md5Util;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import java.util.HashMap;
 import java.util.Map;
+
 
 @Slf4j
 @RestController
@@ -61,4 +62,5 @@ public class UserController {
             return Result.error("登录失败");
         }
     }
+
 }
