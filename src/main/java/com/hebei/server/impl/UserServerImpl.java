@@ -39,7 +39,6 @@ public class UserServerImpl implements UserServer {
      * 更新用户信息
      * */
     public void update(User user) {
-
         userMapper.update(user);
     }
 }

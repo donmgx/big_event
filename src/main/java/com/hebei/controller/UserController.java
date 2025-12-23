@@ -78,13 +78,12 @@ public class UserController {
 
 
     /*
-    * 更新用户信息
-    * */
+     * 更新用户信息
+     * */
     @PutMapping("/update")
-    public Result update(@RequestBody User user){
-        log.info("更新用户信息：{}",user);
+    public Result update(@RequestBody @Validated User user) {
+        log.info("更新用户信息：{}", user);
         userServer.update(user);
         return Result.success();
-
     }
 }

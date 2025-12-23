@@ -1,6 +1,5 @@
 package com.hebei.interceptors;
 
-import com.hebei.pojo.Result;
 import com.hebei.util.JwtUtil;
 import com.hebei.util.ThreadLocalUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,5 +30,10 @@ public class LoginInterceptor implements HandlerInterceptor {
             response.setStatus(401);
             return false;
         }
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        ThreadLocalUtil.remove();
     }
 }

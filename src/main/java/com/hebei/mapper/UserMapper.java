@@ -1,5 +1,7 @@
 package com.hebei.mapper;
 
+import com.hebei.annotation.AutoFill;
+import com.hebei.enumeration.OperationType;
 import com.hebei.pojo.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -18,12 +20,14 @@ public interface UserMapper {
     /*
     * 插入新用户
     * */
+    @AutoFill(value = OperationType.INSERT)
     @Insert("insert into user(username, password, create_time, update_time) VALUES (#{username},#{password},#{createTime},#{updateTime})")
     void insert(User user);
 
     /*
      * 更新用户信息
      * */
+    @AutoFill(value = OperationType.UPDATE)
     @Update("update user set nickname = #{nickname},email = #{email} where id = #{id}")
     void update(User user);
 }
