@@ -33,4 +33,13 @@ public class UserServerImpl implements UserServer {
     public User findByUsername(String username) {
         return userMapper.findByUsername(username);
     }
+
+
+    /*
+     * 更新用户信息
+     * */
+    public void update(User user) {
+
+        userMapper.update(user);
+    }
 }

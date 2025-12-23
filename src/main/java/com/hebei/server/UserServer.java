@@ -13,4 +13,10 @@ public interface UserServer {
     * 判断用户名是否存在
     * */
     User findByUsername(String username);
+
+
+    /*
+     * 更新用户信息
+     * */
+    void update(User user);
 }

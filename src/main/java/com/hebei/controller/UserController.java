@@ -5,13 +5,12 @@ import com.hebei.pojo.User;
 import com.hebei.server.UserServer;
 import com.hebei.util.JwtUtil;
 import com.hebei.util.Md5Util;
+import com.hebei.util.ThreadLocalUtil;
 import jakarta.validation.constraints.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.HashMap;
@@ -63,4 +62,29 @@ public class UserController {
         }
     }
 
+    /*
+     * 获取用户信息
+     * */
+    @GetMapping("/userInfo")
+    public Result getInfo() { //无参数
+        //读取ThreadLocal中的用户信息
+        Map<String, Object> map = ThreadLocalUtil.get();
+        String username = (String) map.get("username");
+        log.info("获取用户信息：{}", username);
+        //读取用户信息
+        User user = userServer.findByUsername(username);
+        return Result.success(user);
+    }
+
+
+    /*
+    * 更新用户信息
+    * */
+    @PutMapping("/update")
+    public Result update(@RequestBody User user){
+        log.info("更新用户信息：{}",user);
+        userServer.update(user);
+        return Result.success();
+
+    }
 }
