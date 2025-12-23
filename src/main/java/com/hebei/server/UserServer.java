@@ -19,4 +19,9 @@ public interface UserServer {
      * 更新用户信息
      * */
     void update(User user);
+
+    /*
+     * 修改密码
+     * */
+    void updatePwd(String oldPwd, String newPwd, String rePwd) throws Exception;
 }

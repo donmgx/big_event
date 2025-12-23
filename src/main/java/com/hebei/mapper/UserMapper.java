@@ -28,6 +28,7 @@ public interface UserMapper {
      * 更新用户信息
      * */
     @AutoFill(value = OperationType.UPDATE)
-    @Update("update user set nickname = #{nickname},email = #{email} where id = #{id}")
+    @Update("update user set nickname = #{nickname}, email = #{email}, password = #{password}, update_time = #{updateTime} where id = #{id}")
     void update(User user);
+
 }

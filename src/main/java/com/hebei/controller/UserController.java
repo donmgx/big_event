@@ -86,4 +86,16 @@ public class UserController {
         userServer.update(user);
         return Result.success();
     }
+
+    /*
+     * 修改密码
+     * */
+    @PatchMapping("/updatePwd")
+    public Result updatePwd(String old_pwd, String new_pwd, String re_pwd) throws Exception {
+        log.info("修改密码");
+
+        userServer.updatePwd(old_pwd, new_pwd, re_pwd);
+
+        return Result.success();
+    }
 }
