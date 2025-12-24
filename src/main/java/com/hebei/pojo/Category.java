@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class Category {
-    @NotNull(groups = Update.class)
+    @NotNull(groups = Update.class) //分组校验
     private Integer id;//主键ID
     @NotEmpty
     @Pattern(regexp = "^\\S{1,10}$")
@@ -26,8 +26,7 @@ public class Category {
     private LocalDateTime updateTime;//更新时间
 
 
-    //分组
-
+    //分组校验
     public interface Add extends Default {
 
     }
