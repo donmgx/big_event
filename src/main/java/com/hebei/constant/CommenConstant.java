@@ -10,4 +10,5 @@ public class CommenConstant {
     public static final String USERID_NOT_EXIST = "用户ID不存在";
     public static final String USER_NOT_EXIST = "用户不存在";
     public static final String USER_HAS_EXIST = "用户已经存在";
+    public static final String CATEGORY_NOT_EXIST = "分类不存在";
 }

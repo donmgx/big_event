@@ -8,6 +8,8 @@ import com.hebei.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -38,4 +40,48 @@ public class CategoryServerImpl implements CategoryServer {
         category.setCreateUser(id);
         categoryMapper.insert(category);
     }
+
+
+    /*
+     * 获取文章分类
+     * */
+    public List<Category> list() {
+        Map<String,Object> map = ThreadLocalUtil.get();
+        Integer createUser = (Integer) map.get("id");
+        List<Category> categories = categoryMapper.findByCreateUser(createUser);
+        return categories;
+    }
+
+
+    /*
+     * 获取文章分类详情
+     * */
+    public Category findCategory(Integer id) {
+        Category category = categoryMapper.findById(id);
+        return category;
+    }
+
+
+    /*
+     * 更新文章分类
+     * */
+    public void update(Category category) {
+        categoryMapper.update(category);
+    }
+
+
+    /*
+     * 删除文章分类
+     * */
+    public void deleteCategory(Integer id) throws Exception {
+        //判断该分类是否存在
+        Category userById = categoryMapper.findById(id);
+        if (userById == null){
+            throw new Exception(CommenConstant.CATEGORY_NOT_EXIST);
+        }
+        categoryMapper.delete(id);
+
+    }
+
+
 }
