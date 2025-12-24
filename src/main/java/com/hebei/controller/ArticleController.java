@@ -1,6 +1,7 @@
 package com.hebei.controller;
 
 import com.hebei.pojo.Article;
+import com.hebei.pojo.PageBean;
 import com.hebei.pojo.Result;
 import com.hebei.server.ArticleSever;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,7 @@ public class ArticleController {
      * */
     @PostMapping
     public Result add(@RequestBody @Validated Article article) {
-        log.info("新增文章：{}");
+        log.info("新增文章：{}", article);
         articleSever.add(article);
         return Result.success();
     }
@@ -29,8 +30,14 @@ public class ArticleController {
      * 文章分页查询
      * */
     @GetMapping
-    public Result listPage() {
-
-        return Result.success("所有文章数据");
+    public Result<PageBean<Article>> listPage(
+            Integer pageNum,
+            Integer pageSize,
+            @RequestParam(required = false) Integer categoryId,
+            @RequestParam(required = false) String state
+    ) {
+        log.info("文章分页查询");
+        PageBean<Article> pageBean = articleSever.listPage(pageNum, pageSize, categoryId, state);
+        return Result.success(pageBean);
     }
 }

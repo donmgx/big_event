@@ -1,9 +1,12 @@
 package com.hebei.server.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.hebei.mapper.ArticleMapper;
 import com.hebei.mapper.CategoryMapper;
 import com.hebei.pojo.Article;
 import com.hebei.pojo.Category;
+import com.hebei.pojo.PageBean;
 import com.hebei.server.ArticleSever;
 import com.hebei.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +34,19 @@ public class ArticleServerImpl implements ArticleSever {
 
         articleMapper.insert(article);
 
+    }
+
+
+    /*
+     * 文章分页查询
+     * */
+    public PageBean<Article> listPage(Integer pageNum, Integer pageSize, Integer categoryId, String state) {
+        PageHelper.startPage(pageNum, pageSize);
+        Map<String,Object> map = ThreadLocalUtil.get();
+
+        Integer createUser = (Integer) map.get("id");
+        Page<Article> page = articleMapper.selectPage(createUser,categoryId,state);
+
+        return new PageBean<>(page.getTotal(),page.getResult());
     }
 }
