@@ -9,12 +9,15 @@ import com.hebei.util.ThreadLocalUtil;
 import jakarta.validation.constraints.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 
 @Slf4j
@@ -24,6 +27,8 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserServer userServer;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     /*
      * 用户注册
@@ -56,6 +61,9 @@ public class UserController {
             claims.put("username", user.getUsername());
             claims.put("id", user.getId());
             String token = JwtUtil.genToken(claims);
+            //装进redis
+            ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
+            operations.set(token,token,12, TimeUnit.HOURS);
             return Result.success(token);
         } else {
             return Result.error("登录失败");
@@ -91,10 +99,13 @@ public class UserController {
      * 修改密码
      * */
     @PatchMapping("/updatePwd")
-    public Result updatePwd(String old_pwd, String new_pwd, String re_pwd) throws Exception {
+    public Result updatePwd(String old_pwd, String new_pwd, String re_pwd, @RequestHeader("Authorization") String token) throws Exception {
         log.info("修改密码");
 
         userServer.updatePwd(old_pwd, new_pwd, re_pwd);
+
+        //删除redis中的token
+        stringRedisTemplate.delete(token);
 
         return Result.success();
     }

@@ -9,6 +9,7 @@ import com.hebei.util.Md5Util;
 import com.hebei.util.ThreadLocalUtil;
 import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,6 +20,8 @@ import java.util.Map;
 public class UserServerImpl implements UserServer {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     /*
      * 用户注册
